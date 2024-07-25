@@ -15,4 +15,11 @@ export const lastName = yup.string().required()
 export const birthdate = yup
   .date()
   .required()
-  .test('age', 'User must be 13 years old to be on the plateform')
+  .test(
+    'age',
+    'User must be 13 years old to be on the plateform',
+    (date) =>
+      Math.abs(new Date().getTime() - ((date ? new Date(date) : new Date()).getTime() || 0)) /
+        (1000 * 60 * 60 * 24 * 365.25) >=
+      13
+  )
