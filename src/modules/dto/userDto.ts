@@ -1,4 +1,5 @@
 export type UserDTO = {
+  [key: string]: any
   name: string | null
   email: string | null
   birthDate: string | null

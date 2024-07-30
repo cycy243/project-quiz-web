@@ -103,6 +103,7 @@ interface RegisterForm {
   email: String
   pseudo: String
   password: String
+  bio: string
   confirmationPassword: String
   firstName: String
   lastName: String
@@ -119,17 +120,16 @@ const errorMsg = ref<string>()
 
 const onSubmit = handleSubmit(
   async (values: RegisterForm) => {
-    const file2 = file.value
     errorMsg.value = undefined
     try {
       await userService.registerUser({
         bio: '',
-        birthDate: new Date(values.birthdate),
+        birthDate: values.birthdate,
         email: values.email.toString(),
         pseudo: values.pseudo.toString(),
         firstname: values.firstName.toString(),
         name: values.lastName.toString(),
-        profilePicUri: '',
+        avatar: file.value!,
         password: values.password.toString()
       })
     } catch (error) {
@@ -141,7 +141,7 @@ const onSubmit = handleSubmit(
   }
 )
 
-const userService = inject<AuthService>(InjectionKeys.UserService)!
+const userService = inject<AuthService>(InjectionKeys.UserService) as AuthService
 
 const [email, emailProps] = defineField('email')
 const [password, passwordProps] = defineField('password')
