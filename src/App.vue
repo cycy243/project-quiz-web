@@ -29,6 +29,7 @@ nav a:first-of-type {
 }
 
 main {
+  display: flex;
   margin-block-start: 2rem;
   padding: 1rem;
   background-color: rgba(70, 145, 51, 0.384);

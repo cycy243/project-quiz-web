@@ -13,7 +13,9 @@
     </div>
     <div class="auth_menu">
       <nav>
-        <RouterLink :to="{ name: 'register' }">Register</RouterLink>
+        <ActionButton>
+          <RouterLink :to="{ name: 'register' }">Register</RouterLink>
+        </ActionButton>
       </nav>
     </div>
   </header>
@@ -22,6 +24,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import ActionButton from '../buttons/ActionButton.vue'
 
 const isAdmin = ref(false)
 </script>
