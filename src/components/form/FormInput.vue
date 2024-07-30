@@ -38,5 +38,6 @@ input {
 
 .error_wrapper p {
   margin: 0;
+  position: absolute;
 }
 </style>
