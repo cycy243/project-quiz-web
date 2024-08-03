@@ -67,11 +67,14 @@
           v-model="confirmationPassword"
           v-bind="confirmationPasswordProps"
         />
-        <input
-          name="file"
-          id="file"
-          type="file"
-          @change="(e) => (file = (e.target as HTMLInputElement)?.files[0])"
+        <FormFileInput
+          :name="'file'"
+          :title="'Avatar'"
+          :defaultValue="file"
+          :error="errors.file"
+          :type="'file'"
+          v-model="file"
+          v-bind="fileProps"
         />
         <ActionButton>Sign up</ActionButton>
       </form>
@@ -88,6 +91,7 @@ import { inject, ref } from 'vue'
 
 import * as InjectionKeys from '@/modules/utils/injectionKeys'
 import type AuthService from '@/modules/services/authService'
+import FormFileInput from '@/components/form/FormFileInput.vue'
 
 const schema = yup.object({
   email: rules.email,
@@ -108,9 +112,8 @@ interface RegisterForm {
   firstName: String
   lastName: String
   birthdate: string
+  file: File
 }
-
-const file = ref<File>()
 
 const { defineField, errors, handleSubmit } = useForm<RegisterForm>({
   validationSchema: schema
@@ -120,6 +123,7 @@ const errorMsg = ref<string>()
 
 const onSubmit = handleSubmit(
   async (values: RegisterForm) => {
+    debugger
     errorMsg.value = undefined
     try {
       await userService.registerUser({
@@ -129,7 +133,7 @@ const onSubmit = handleSubmit(
         pseudo: values.pseudo.toString(),
         firstname: values.firstName.toString(),
         name: values.lastName.toString(),
-        avatar: file.value!,
+        avatar: values.file,
         password: values.password.toString()
       })
     } catch (error) {
@@ -150,6 +154,7 @@ const [lastName, lastNameProps] = defineField('lastName')
 const [firstName, firstNameProps] = defineField('firstName')
 const [birthdate, birthdateProps] = defineField('birthdate')
 const [pseudo, pseudoProps] = defineField('pseudo')
+const [file, fileProps] = defineField('file')
 </script>
 <style lang="css" scoped>
 .register_view {

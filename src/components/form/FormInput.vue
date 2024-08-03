@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import type { FormInputProps } from './FormInputProps'
 
-const props = defineProps<FormInputProps>()
+const props = defineProps<FormInputProps<String>>()
 
 const emit = defineEmits(['update:modelValue', 'blur'])
 </script>

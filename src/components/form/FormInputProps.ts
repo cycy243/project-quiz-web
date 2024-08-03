@@ -1,9 +1,9 @@
-export interface FormInputProps {
+export interface FormInputProps<T> {
   error?: string
   title: string
   name: string
   id?: string
   placeholder?: string
-  defaultValue?: any
+  defaultValue?: T
   type: string
 }

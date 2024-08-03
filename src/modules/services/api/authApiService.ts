@@ -11,12 +11,17 @@ export default class AuthApiService implements AuthService {
 
   async registerUser(user: RegisterDTO): Promise<boolean> {
     try {
-      return (await this.registerRepo.register(user)) !== undefined
+      return (
+        (await this.registerRepo.register({
+          ...user,
+          birthDate: user.birthDate.replace('-', '/')
+        })) !== undefined
+      )
     } catch (error) {
       if (error instanceof BaseError) {
         throw new ServiceError(error.message)
       }
-      throw new ServiceError('AN unexpected error occured')
+      throw new ServiceError('An unexpected error occured')
     }
   }
 }
