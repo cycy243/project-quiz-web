@@ -100,7 +100,8 @@ const schema = yup.object({
   confirmationPassword: rules.confirmationPassword,
   firstName: rules.firstName,
   lastName: rules.lastName,
-  birthdate: rules.birthdate
+  birthdate: rules.birthdate,
+  file: rules.avatarImg
 })
 
 interface RegisterForm {
@@ -123,11 +124,10 @@ const errorMsg = ref<string>()
 
 const onSubmit = handleSubmit(
   async (values: RegisterForm) => {
-    debugger
     errorMsg.value = undefined
     try {
       await userService.registerUser({
-        bio: '',
+        bio: values.bio,
         birthDate: values.birthdate,
         email: values.email.toString(),
         pseudo: values.pseudo.toString(),
@@ -154,7 +154,9 @@ const [lastName, lastNameProps] = defineField('lastName')
 const [firstName, firstNameProps] = defineField('firstName')
 const [birthdate, birthdateProps] = defineField('birthdate')
 const [pseudo, pseudoProps] = defineField('pseudo')
-const [file, fileProps] = defineField('file')
+const [file, fileProps] = defineField('file', {
+  validateOnModelUpdate: true
+})
 </script>
 <style lang="css" scoped>
 .register_view {

@@ -1,5 +1,8 @@
 import * as yup from 'yup'
 
+const VALID_FILE_TYPES = ['image/png', 'image/jpeg', 'image/gif', 'image/jpg']
+const MAX_SIZE = 1024 * 1024 * 20
+
 export const email = yup
   .string()
   .required('The email is required')
@@ -26,3 +29,14 @@ export const birthdate = yup
         (1000 * 60 * 60 * 24 * 365.25) >=
       13
   )
+export const avatarImg = yup
+  .mixed()
+  .required('You must provide an avatar')
+  .test('is-valid-type', 'The type of the avatar must be: jpg, jpeg, gif, png', (value) => {
+    const file = value as File
+    return VALID_FILE_TYPES.includes(file.type)
+  })
+  .test('is-valid-size', 'The size of the avatar mustnot exceed 20 MB', (value) => {
+    const file = value as File
+    return file.size <= MAX_SIZE
+  })
