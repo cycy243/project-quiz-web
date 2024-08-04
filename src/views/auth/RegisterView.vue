@@ -133,7 +133,7 @@ const onSubmit = handleSubmit(
         pseudo: values.pseudo.toString(),
         firstname: values.firstName.toString(),
         name: values.lastName.toString(),
-        avatar: values.file,
+        file: values.file,
         password: values.password.toString()
       })
     } catch (error) {

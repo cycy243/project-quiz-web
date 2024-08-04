@@ -6,6 +6,6 @@ export type RegisterDTO = {
   pseudo: string
   bio: string
   firstname: string
-  avatar: File
+  file: File
   password: string
 }
