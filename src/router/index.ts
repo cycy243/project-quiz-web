@@ -20,6 +20,12 @@ const router = createRouter({
           path: '/register',
           name: 'register',
           component: RegisterView
+        },
+        {
+          // temporary route, to change when doing login feature
+          path: '/login',
+          name: 'login',
+          component: RegisterView
         }
       ]
     },

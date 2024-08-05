@@ -3,6 +3,10 @@
     <h2 class="page_title">Sign in</h2>
     <div class="wrapper form_wrapper">
       <p v-if="errorMsg">{{ errorMsg }}</p>
+      <div v-if="showSuccessMessage">
+        <p>You have just sucessfully registered</p>
+        <p>You can now go login <RouterLink :to="{ name: 'login' }">here</RouterLink></p>
+      </div>
       <form @submit="onSubmit">
         <FormInput
           :name="'email'"
@@ -93,6 +97,8 @@ import * as InjectionKeys from '@/modules/utils/injectionKeys'
 import type AuthService from '@/modules/services/authService'
 import FormFileInput from '@/components/form/FormFileInput.vue'
 
+const showSuccessMessage = ref(false)
+
 const schema = yup.object({
   email: rules.email,
   pseudo: rules.password,
@@ -136,12 +142,13 @@ const onSubmit = handleSubmit(
         file: values.file,
         password: values.password.toString()
       })
+      showSuccessMessage.value = true
     } catch (error) {
       errorMsg.value = (error as any).message
     }
   },
-  (errors) => {
-    alert(errors)
+  () => {
+    errorMsg.value = 'One or more validation error occured'
   }
 )
 
