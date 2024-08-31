@@ -3,4 +3,5 @@ import type { UserDTO } from '../dto/userDto'
 
 export default interface UserRegisterRepository {
   register(user: RegisterDTO): Promise<UserDTO>
+  loginWithPseudo(login: string, pasword: string): Promise<UserDTO>
 }
