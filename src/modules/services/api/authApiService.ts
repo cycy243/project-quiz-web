@@ -4,7 +4,7 @@ import ServiceError from '../error/serviceError'
 import userMapper from '@/modules/mappers/userMapper'
 import BaseError from '@/modules/repository/error/baseError'
 import type { RegisterDTO } from '@/modules/dto/registerDto'
-import type UserRegisterRepository from '@/modules/repository/userAuthRepository'
+import type UserRegisterRepository from '@/modules/repository/iUserAuthRepository'
 
 export default class AuthApiService implements AuthService {
   constructor(private registerRepo: UserRegisterRepository) {}

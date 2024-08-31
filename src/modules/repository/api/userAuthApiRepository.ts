@@ -3,11 +3,11 @@ import ResourceAlreadyExist from '../error/resourceAlreadyExist'
 import BadRequest from '../error/badRequest'
 
 import { type Response } from 'redaxios'
-import type UserRegisterRepository from '../userAuthRepository'
+import type IUserAuthRepository from '../iUserAuthRepository'
 import type { UserDTO } from '@/modules/dto/userDto'
 import { password } from '@/modules/validation/rules'
 
-export default class UserAuthApiRepository implements UserRegisterRepository {
+export default class UserAuthApiRepository implements IUserAuthRepository {
   constructor(private readaxios: any) {}
 
   async register(user: RegisterDTO): Promise<UserDTO> {
