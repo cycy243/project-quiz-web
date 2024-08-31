@@ -11,12 +11,19 @@
       </nav>
       <nav name="admin_menu" v-if="isAdmin"></nav>
     </div>
-    <div class="auth_menu">
+    <div class="auth_menu" v-if="!authStore.isAuthenticated">
       <nav>
         <ActionButton>
           <RouterLink :to="{ name: 'register' }">Register</RouterLink>
         </ActionButton>
+        <ActionButton>
+          <RouterLink :to="{ name: 'login' }">Login</RouterLink>
+        </ActionButton>
       </nav>
+    </div>
+    <div class="user_menu" v-if="authStore.isAuthenticated">
+      <img :src="authStore.connectedUser?.profilePicUri!" height="70px" />
+      <p>{{ authStore.connectedUser?.pseudo }}</p>
     </div>
   </header>
 </template>
@@ -25,6 +32,9 @@
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import ActionButton from '../buttons/ActionButton.vue'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
 
 const isAdmin = ref(false)
 </script>
@@ -34,10 +44,19 @@ const isAdmin = ref(false)
   margin: 0.3rem;
 }
 
-.auth_menu {
+.auth_menu,
+.user_menu {
   position: absolute;
   right: 0;
   margin: 1rem 2rem 1rem 2rem;
+}
+
+.user_menu {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  top: 0;
+  padding: 0;
 }
 
 header {
