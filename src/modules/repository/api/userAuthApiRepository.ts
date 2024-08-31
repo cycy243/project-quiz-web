@@ -6,6 +6,7 @@ import { type Response } from 'redaxios'
 import type IUserAuthRepository from '../iUserAuthRepository'
 import type { UserDTO } from '@/modules/dto/userDto'
 import { password } from '@/modules/validation/rules'
+import ResourceNotFound from '../error/resourceNotFound'
 
 export default class UserAuthApiRepository implements IUserAuthRepository {
   constructor(private readaxios: any) {}
@@ -36,7 +37,9 @@ export default class UserAuthApiRepository implements IUserAuthRepository {
       return response.data
     } catch (error) {
       if ((error as any).status === 404) {
-        throw new ResourceAlreadyExist('User not found')
+        throw new ResourceNotFound(
+          'No user were found for the given combination of login and password'
+        )
       }
       if ((error as any).status === 400) {
         throw new BadRequest("One or multiple p field weren't correctly formatted")
