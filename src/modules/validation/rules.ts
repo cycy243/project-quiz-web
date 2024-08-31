@@ -7,6 +7,7 @@ export const email = yup
   .string()
   .required('The email is required')
   .email('You need to enter a valid email')
+export const login = yup.string().required('The login is required')
 export const pseudo = yup.string().required('The pseudo is required')
 export const password = yup
   .string()
