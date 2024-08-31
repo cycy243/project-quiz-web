@@ -9,20 +9,20 @@ import type AuthService from './modules/services/authService'
 
 import * as injectionKeys from '@/modules/utils/injectionKeys'
 import AuthApiService from './modules/services/api/authApiService'
-import UserRegisterApiRepository from './modules/repository/api/userRegisterApiRepository'
 
 import * as apiClient from '@/modules/repository/api/apiClient'
+import UserAuthApiRepository from './modules/repository/api/userAuthApiRepository'
 
 const app = createApp(App)
+
+app.use(createPinia())
 
 app.provide<AuthService>(
   injectionKeys.UserService,
   new AuthApiService(
-    new UserRegisterApiRepository(apiClient.createInstance(import.meta.env.VITE_API_URL))
+    new UserAuthApiRepository(apiClient.createInstance(import.meta.env.VITE_API_URL))
   )
 )
-
-app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
