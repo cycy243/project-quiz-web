@@ -2,8 +2,8 @@
   <div class="register_view page_view">
     <h2 class="page_title">Sign in</h2>
     <div class="wrapper form_wrapper">
-      <p v-if="errorMsg">{{ errorMsg }}</p>
-      <div v-if="showSuccessMessage">
+      <p v-if="errorMsg" class="error_message">{{ errorMsg }}</p>
+      <div v-if="showSuccessMessage" class="success_message">
         <p>You have just sucessfully registered</p>
         <p>You can now go login <RouterLink :to="{ name: 'login' }">here</RouterLink></p>
       </div>

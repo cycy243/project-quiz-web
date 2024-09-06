@@ -2,6 +2,7 @@
   <div class="input_wrapper">
     <label>{{ title }}:</label>
     <input
+      :name="name"
       :type="type"
       @change="(event: Event) => $emit('update:modelValue', event.target?.files[0])"
     />
