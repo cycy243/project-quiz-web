@@ -1,7 +1,7 @@
-<template lang="">
+<template>
   <div class="quiz-card">
     <StarIcon class="quiz-score" />
-    <img src="../png.png" title="quiz" class="quiz-card-miniature" />
+    <img src="../img/default.png" title="quiz" class="quiz-card-miniature" />
     <div class="quiz-question-count">
       <div></div>
       <p>10 questions</p>
