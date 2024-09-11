@@ -31,7 +31,7 @@ span {
 }
 
 div {
-  width: 35px;
+  width: 40px;
   height: 33px;
   display: flex;
   justify-content: center;
