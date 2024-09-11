@@ -13,9 +13,14 @@ import AuthApiService from './modules/services/api/authApiService'
 import * as apiClient from '@/modules/repository/api/apiClient'
 import UserAuthApiRepository from './modules/repository/api/userAuthApiRepository'
 
-const app = createApp(App)
+import { useAuthStore } from '@/stores/auth'
 
-app.use(createPinia())
+const app = createApp(App)
+const pinia = createPinia()
+
+app.use(pinia)
+
+const authStore = useAuthStore()
 
 app.provide<AuthService>(
   injectionKeys.UserService,
@@ -24,5 +29,12 @@ app.provide<AuthService>(
   )
 )
 app.use(router)
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiredAuth && !authStore.isAuthenticated) {
+    next({ name: 'home' })
+  }
+  next()
+})
 
 app.mount('#app')

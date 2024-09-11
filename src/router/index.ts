@@ -16,7 +16,10 @@ const router = createRouter({
     {
       path: '/feed',
       name: 'feed',
-      component: FeedView
+      component: FeedView,
+      meta: {
+        requiredAuth: true
+      }
     },
     {
       path: '/',
