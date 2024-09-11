@@ -43,7 +43,9 @@ import { useAuthStore } from '@/stores/auth'
 
 import * as InjectionKeys from '@/modules/utils/injectionKeys'
 import type AuthService from '@/modules/services/authService'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const authStore = useAuthStore()
 
 const showSuccessMessage = ref(false)
@@ -74,6 +76,7 @@ const onSubmit = handleSubmit(
       )
       showSuccessMessage.value = true
       authStore.logInUser(result!)
+      router.push({ name: 'feed' })
     } catch (error) {
       errorMsg.value = (error as any).message
     }
