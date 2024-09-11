@@ -23,3 +23,9 @@ a:active {
 .page_view {
   width: 100%;
 }
+
+.router-link-active,
+.router-link-exact-active {
+  color: rgba(173, 255, 47, 1) !important;
+  font-weight: bold !important;
+}
