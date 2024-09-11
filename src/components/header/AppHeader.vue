@@ -8,6 +8,10 @@
       <nav class="nav_menu">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/feed">Categories</RouterLink>
+        <template v-if="authStore.isAuthenticated">
+          <RouterLink to="/feed">Feed</RouterLink>
+        </template>
       </nav>
       <nav name="admin_menu" v-if="isAdmin"></nav>
     </div>
