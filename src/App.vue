@@ -33,5 +33,13 @@ main {
   margin-block-start: 2rem;
   padding: 1rem;
   background-color: rgba(70, 145, 51, 0.384);
+  justify-content: center;
+}
+
+@media screen and (max-width: 450px) {
+  .page_content {
+    width: 100vw;
+    padding-inline: 0;
+  }
 }
 </style>
