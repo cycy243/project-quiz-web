@@ -1,11 +1,6 @@
 <template>
   <div class="search-bar">
-    <input
-      v-model="inputValue"
-      type="text"
-      placeholder="Search users, quizzes, ..."
-      class="search-bar-input"
-    />
+    <input v-model="inputValue" type="text" :placeholder="placeholder" class="search-bar-input" />
     <IconSearch class="search-bar-search-icon" @click.prevent="searchClicked" />
   </div>
 </template>
@@ -17,18 +12,24 @@ type SearchBarEmits = {
   (e: 'change', value: string): void
   (e: 'submit', value: string): void
 }
+const emit = defineEmits<SearchBarEmits>()
+
+type SearchBarProps = {
+  placeholder: string
+}
+const props = defineProps<SearchBarProps>()
 
 const inputValue = ref<string>()
 
-const emit = defineEmits<SearchBarEmits>()
-
-function searchClicked() {}
+function searchClicked() {
+  emit('submit', inputValue.value || '')
+}
 </script>
 <style lang="css" scoped>
 .search-bar {
   display: flex;
   flex-direction: row;
-  width: 380px;
+  width: 300px;
   background-color: #b1b2b5;
   padding-block: 3px;
   padding-inline: 6px;
