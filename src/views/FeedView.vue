@@ -11,17 +11,17 @@
           <span>Filter</span>
         </ActionButton>
       </div>
-      <SearchBar />
+      <SearchBar placeholder="Search users, quizzes, ..." />
     </div>
     <div class="wrapper">
       <QuizCard v-for="(item, index) in quizzes" :key="index" class="quiz-card" />
     </div>
     <div class="wrapper pagination-wrapper">
-      <ActionButton><<</ActionButton>
+      <ActionButton><IconPrevious /></ActionButton>
       <ActionButton>1</ActionButton>
       <ActionButton>2</ActionButton>
       <ActionButton>3</ActionButton>
-      <ActionButton>>></ActionButton>
+      <ActionButton><IconNext /></ActionButton>
     </div>
   </div>
 </template>
@@ -32,6 +32,8 @@ import SearchBar from '@/components/form/SearchBar.vue'
 import { ref } from 'vue'
 import IconFilter from '@/components/icons/IconFilter.vue'
 import ActionButton from '@/components/buttons/ActionButton.vue'
+import IconNext from '@/components/icons/IconNext.vue'
+import IconPrevious from '@/components/icons/IconPrevious.vue'
 
 const quizzes = ref([5, 1, 8, 3])
 
@@ -79,7 +81,6 @@ function filterClicked() {
 
 .pagination-wrapper .action_btn {
   margin-inline: 4px;
-  width: 25px;
   height: 25px;
   text-align: center;
   border-radius: 10px;
