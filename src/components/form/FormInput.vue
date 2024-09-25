@@ -2,6 +2,7 @@
   <div class="input_wrapper">
     <label :for="name">{{ title }}:</label>
     <input
+      v-if="type !== 'textarea'"
       :type="type"
       :name="name"
       :id="id || name"
@@ -10,6 +11,15 @@
       @input="$emit('update:modelValue', $event.target?.value)"
       @blur="$emit('blur')"
     />
+    <textarea
+      v-else
+      :type="type"
+      :name="name"
+      :id="id || name"
+      :placeholder="placeholder"
+      @input="$emit('update:modelValue', $event.target?.value)"
+      @blur="$emit('blur')"
+    ></textarea>
     <div v-if="error" class="error_wrapper">
       <p>{{ error }}</p>
     </div>
@@ -18,7 +28,7 @@
 <script setup lang="ts">
 import type { FormInputProps } from './FormInputProps'
 
-const props = defineProps<FormInputProps<String>>()
+const props = defineProps<FormInputProps<string>>()
 
 const emit = defineEmits(['update:modelValue', 'blur'])
 </script>

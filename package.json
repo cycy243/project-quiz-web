@@ -16,6 +16,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vee-validate/yup": "^4.13.2",
     "pinia": "^2.1.7",
     "primevue": "^4.0.3",
     "redaxios": "^0.5.1",

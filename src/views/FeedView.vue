@@ -1,5 +1,6 @@
 <template>
   <div class="feed">
+    <NewQuizModal @close="closeModal" class="modal" v-if="showNewQuizModal" />
     <div class="actions-wrapper">
       <div class="filtering-wrapper">
         <ActionButton @click.prevent="sortClicked">
@@ -11,7 +12,10 @@
           <span>Filter</span>
         </ActionButton>
       </div>
-      <SearchBar placeholder="Search users, quizzes, ..." />
+      <div>
+        <SearchBar placeholder="Search users, quizzes, ..." />
+        <ActionButton @click.prevent="newQuizClicked"><IconNew /></ActionButton>
+      </div>
     </div>
     <div class="wrapper">
       <QuizCard v-for="(item, index) in quizzes" :key="index" class="quiz-card" />
@@ -27,6 +31,7 @@
 </template>
 <script setup lang="ts">
 import IconSort from '@/components/icons/IconSort.vue'
+import IconClose from '@/components/icons/IconClose.vue'
 import QuizCard from '@/components/cards/QuizCard.vue'
 import SearchBar from '@/components/form/SearchBar.vue'
 import { ref } from 'vue'
@@ -34,6 +39,8 @@ import IconFilter from '@/components/icons/IconFilter.vue'
 import ActionButton from '@/components/buttons/ActionButton.vue'
 import IconNext from '@/components/icons/IconNext.vue'
 import IconPrevious from '@/components/icons/IconPrevious.vue'
+import IconNew from '@/components/icons/IconNew.vue'
+import NewQuizModal from '@/components/quiz/NewQuizModal.vue'
 
 const quizzes = ref([5, 1, 8, 3])
 
@@ -44,8 +51,24 @@ function sortClicked() {
 function filterClicked() {
   alert("'filter' button has been clicked")
 }
+
+const showNewQuizModal = ref(false)
+
+function newQuizClicked() {
+  showNewQuizModal.value = !showNewQuizModal.value
+}
+function closeModal() {
+  showNewQuizModal.value = false
+}
 </script>
 <style lang="css" scoped>
+.modal {
+  z-index: 100;
+  position: absolute;
+  top: 100px;
+  margin: auto;
+}
+
 .feed,
 .feed .wrapper,
 .actions-wrapper,
@@ -53,7 +76,9 @@ function filterClicked() {
   display: flex;
   flex-wrap: wrap;
 }
-
+.feed {
+  justify-content: center;
+}
 .feed .wrapper {
   justify-content: center;
   width: 100%;
@@ -96,5 +121,10 @@ function filterClicked() {
 
 .quiz-card {
   margin-block: 10px;
+}
+
+.actions-wrapper div:last-child {
+  display: flex;
+  flex-direction: row;
 }
 </style>
