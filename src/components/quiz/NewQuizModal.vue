@@ -6,6 +6,7 @@
       <IconClose @click="closeClicked" />
     </div>
     <form @submit.prevent="onSubmit">
+      <p v-if="savedError">{{ savedError }}</p>
       <div>
         <span class="section-title">General</span>
         <div class="input-wrapper">
@@ -47,10 +48,15 @@
       <div class="question-section">
         <span class="section-title">Questions</span>
         <p>No question added</p>
-        <ActionButton class="new-question-btn"><IconNew /><span>New question</span></ActionButton>
+        <NewQuestionForm v-show="showNewQuestionForm" />
+        <ActionButton
+          class="new-question-btn"
+          @click.prevent="() => (showNewQuestionForm = !showNewQuestionForm)"
+          ><IconNew /><span>New question</span></ActionButton
+        >
       </div>
       <div>
-        <ActionButton><button class="submit-btn">Submit</button></ActionButton>
+        <ActionButton><button class="submit-btn" type="submit">Submit</button></ActionButton>
       </div>
     </form>
   </div>
@@ -62,6 +68,23 @@ import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/yup'
 import ActionButton from '../buttons/ActionButton.vue'
 import IconNew from '../icons/IconNew.vue'
+import { ref } from 'vue'
+import NewQuestionForm from './NewQuestionForm.vue'
+
+export type QuizFormProps = {
+  initialValue?: any // TODO: Change by a real type that represents a quiz
+}
+
+const props = defineProps<QuizFormProps>()
+
+const savedError = ref<string>()
+const showNewQuestionForm = ref(false)
+
+export type QuizFormValues = {
+  id?: string
+  title: string
+  description: string
+}
 
 const schema = toTypedSchema(
   yup.object({
@@ -70,25 +93,39 @@ const schema = toTypedSchema(
   })
 )
 
-const { defineField, handleSubmit, errors } = useForm({ validationSchema: schema })
+const { defineField, handleSubmit, errors, resetForm } = useForm({
+  validationSchema: schema
+})
 
 const [title, titleProps] = defineField('title')
 const [description, descriptionProps] = defineField('description')
 
-const onSubmit = handleSubmit((value: any) => {
-  console.log('coucou')
-
-  emit('submit')
+const onSubmit = handleSubmit((values: QuizFormValues, { resetForm }) => {
+  emit(
+    'saved',
+    values,
+    () => {
+      savedError.value = undefined
+      resetForm()
+    },
+    (error: string) => (savedError.value = error)
+  )
 })
 
 type NewQuizModalEmits = {
   (e: 'close'): void
-  (e: 'submit'): void
+  (
+    e: 'saved',
+    values: QuizFormValues,
+    onSuccess?: () => void,
+    onError?: (error: string) => void
+  ): void
 }
 
 const emit = defineEmits<NewQuizModalEmits>()
 
 function closeClicked() {
+  resetForm()
   emit('close')
 }
 </script>
